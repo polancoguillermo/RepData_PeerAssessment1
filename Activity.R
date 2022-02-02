@@ -1,13 +1,3 @@
----
-title: "Reproducible Research: Peer Assessment 1 - GP"
-output: 
-  html_document:
-    keep_md: true
----
-
-
-## Loading and preprocessing the data
-```{r}
 #Import data from repository
 library(dplyr)
 library(tidyr)
@@ -26,25 +16,6 @@ activity_mean <- group_by(activity, wkday)
 act_sum <-summarize(activity_mean, steps=sum(steps, na.rm = TRUE))
 act_sum
 
-#Get mean and median
-mean(act_sum$steps)
-median(act_sum$steps)
-
-#Transform to time series
-
-act_time <- group_by(activity, interval)
-act.time.avg <-summarize(act_time, steps=mean(steps, na.rm = TRUE))
-act.time.avg <- act.time.avg[!is.na(act.time.avg$steps),]
-act.time.avg
-
-
-
-```
-
-
-
-## What is mean total number of steps taken per day?
-```{r}
 #Plot sum of steps 
 
 ggplot(data=act_sum, aes(wkday, steps))+
@@ -56,21 +27,21 @@ ggplot(data=act_sum, aes(wkday, steps))+
 #Get mean and median
 mean(act_sum$steps)
 median(act_sum$steps)
-```
 
+#Transform to time series
 
-## What is the average daily activity pattern?
-```{r}
+act_time <- group_by(activity, interval)
+act.time.avg <-summarize(act_time, steps=mean(steps, na.rm = TRUE))
+act.time.avg <- act.time.avg[!is.na(act.time.avg$steps),]
+act.time.avg
+
 ggplot(act.time.avg, aes(interval, steps))+ #Yes! it works
   geom_line()+
   xlab("Steps")+
   ylab("Average number of steps")+
   ggtitle("Average of Steps per day")
-```
 
 
-## Imputing missing values
-```{r}
 #Calculating rows where NAs
 sum(!complete.cases(activity))
 
@@ -89,6 +60,7 @@ activity.na.merged <- left_join(activity.na, activity.non.na, by= c("interval" =
 #merge two datasets, NA and non-NA into one
 
 activity.repl <- rbind(activity.non.na2,activity.na.merged)
+activity.repl
 
 #prepare data for charting
 #Turn date variable into date format and day of week
@@ -111,13 +83,6 @@ ggplot(data=act.repl.sum, aes(wkday, steps))+
 mean(act.repl.sum$steps)
 median(act.repl.sum$steps)
 
-```
-
-
-## Are there differences in activity patterns between weekdays and weekends?
-
-Overall, the average number of steps during the weekend is more consistent when compared with the weekday, which has a high peak.
-```{r}
 
 #Data for weekday vs weekend comparison
 activity.repl <-activity.repl %>%
@@ -135,4 +100,3 @@ ggplot(act.repl.time.avg, aes(interval, steps, color=daytype))+ #Yes! it works
   xlab("Interval")+
   ylab("Average number of steps")+
   ggtitle("Average of Steps Weekend vs Weekday")
-```
