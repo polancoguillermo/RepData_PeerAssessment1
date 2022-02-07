@@ -238,3 +238,6 @@ ggplot(act.repl.time.avg, aes(interval, steps, color=daytype))+ #Yes! it works
 ```
 
 ![](PA1_template_files/figure-html/unnamed-chunk-5-1.png)<!-- -->
+
+##Addedum: Highest step count frequency is:
+This is refering to the timeplot, it shows the highest frequency at around the 1000 steps mark

@@ -127,3 +127,6 @@ ggplot(act.repl.time.avg, aes(interval, steps, color=daytype))+ #Yes! it works
   ylab("Average number of steps")+
   ggtitle("Average of Steps Weekend vs Weekday")
 ```
+
+##Addedum: Highest step count frequency is:
+This is refering to the timeplot, it shows the highest frequency at around the 1000 steps mark
